@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://d00adkqm2jd8h"]
 
-[ext_resource type="Script" uid="uid://dnrf3ncdscijs" path="res://scripts/ennemies.gd" id="1_oi1av"]
+[ext_resource type="Script" uid="uid://dnrf3ncdscijs" path="res://scripts/enemies.gd" id="1_oi1av"]
 [ext_resource type="Texture2D" uid="uid://bs4fw80tgtwg2" path="res://assets/sprites/knight.png" id="1_ti4pg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ti4pg"]
@@ -146,7 +146,7 @@ metadata/_edit_group_ = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_s45k7")
 animation = &"hit"
-frame_progress = 0.6981602
+frame_progress = 0.38726822
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
