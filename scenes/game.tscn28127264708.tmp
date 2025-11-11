@@ -1,11 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://6ec3a7mx85f"]
+[gd_scene load_steps=10 format=3 uid="uid://6ec3a7mx85f"]
 
 [ext_resource type="Script" uid="uid://bb4edfqhveu5l" path="res://scripts/game_manager.gd" id="1_lbhrr"]
-[ext_resource type="PackedScene" uid="uid://bajjlplok6hah" path="res://scenes/mobs.tscn" id="2_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://d00adkqm2jd8h" path="res://scenes/enemies.tscn" id="2_lbhrr"]
 [ext_resource type="Texture2D" uid="uid://dqjujfgfpg48d" path="res://assets/sprites/world_tileset.png" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://ckhh5luc6h5re" path="res://scenes/wave.tscn" id="2_yqjtg"]
-[ext_resource type="Texture2D" uid="uid://guxtf1at7al7" path="res://assets/sprites/Pixel2_Healthbar_0004_Background.png" id="5_p57ef"]
-[ext_resource type="Texture2D" uid="uid://dc7e854wy1wbb" path="res://assets/sprites/Pixel1_Healthbar_0004_Background.png" id="6_u5sy4"]
 
 [sub_resource type="Curve2D" id="Curve2D_iywne"]
 _data = {
@@ -162,14 +160,6 @@ normal = Vector2(0, 1)
 script = ExtResource("1_lbhrr")
 enemy_scenes = Array[PackedScene]([ExtResource("2_lbhrr")])
 
-[node name="PowerMeter" type="TextureProgressBar" parent="."]
-offset_left = -240.0
-offset_top = -128.0
-offset_right = -4.0
-offset_bottom = 45.0
-texture_under = ExtResource("5_p57ef")
-texture_progress = ExtResource("6_u5sy4")
-
 [node name="Spawn" type="Node" parent="."]
 
 [node name="EnemyTimer" type="Timer" parent="Spawn"]
@@ -198,18 +188,22 @@ tile_set = SubResource("TileSet_iywne")
 format = 2
 
 [node name="ButtomLimit" type="StaticBody2D" parent="."]
-collision_layer = 4
 
 [node name="Buttomlimit" type="CollisionShape2D" parent="ButtomLimit"]
 position = Vector2(-1, 111)
 shape = SubResource("WorldBoundaryShape2D_yqjtg")
 
 [node name="UpperLimit" type="StaticBody2D" parent="."]
-collision_layer = 4
 
 [node name="Upperlimit" type="CollisionShape2D" parent="UpperLimit"]
-position = Vector2(0, -104)
+position = Vector2(0, -134)
 shape = SubResource("WorldBoundaryShape2D_lnu2h")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PowerMeter" type="TextureProgressBar" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="timeout" from="Spawn/EnemyTimer" to="." method="_on_enemy_timer_timeout"]
 [connection signal="timeout" from="Spawn/ScoreTimer" to="." method="_on_score_timer_timeout"]
