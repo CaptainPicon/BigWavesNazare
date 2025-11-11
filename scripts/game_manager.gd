@@ -12,15 +12,20 @@ extends Node2D
 
 # PowerBar
 @onready var bar: TextureProgressBar = $PowerMeter
+@onready var wave_scene = $wave
+@onready var wave_animation: AnimatedSprite2D = wave_scene.get_node("AnimatedSprite2D")
 @export var power_max: float = 100.0
-@export var passive_power_rate: float = 1.0 # power per second
+@export var passive_power_rate: float = -1.0 # power per second
 @export var destruction_power_gain: float = 10 # power per kill
+@export var wave_small_threshold = 0.33   # 0 - 33% power
+@export var wave_medium_threshold = 0.66  # 34% - 66%
+
 
 # Score
 var score: int = 0
 
 # PowerBar
-var power: float = 0.0
+var power: float = 10.0
 
 ## --- READY ---
 func _ready() -> void:
@@ -67,6 +72,19 @@ func _update_power_meter():
 		bar.tint_progress = Color(1, 0.8, 0.2)  # yellow = mid
 	else:
 		bar.tint_progress = Color(0.2, 0.6, 1.0) # blue = low
+	
+	# Play wave animation based on power level
+	var normalized_power = power / power_max
+	if normalized_power <= wave_small_threshold:
+		_play_wave_animation("low")
+	elif normalized_power <= wave_medium_threshold:
+		_play_wave_animation("medium")
+	else:
+		_play_wave_animation("big")
+
+func _play_wave_animation(anim_name: String) -> void:
+	if not wave_animation.is_playing() or wave_animation.animation != anim_name:
+		wave_animation.play(anim_name)
 
 ## --- ENEMY SPAWN ---
 func _on_start_timer_timeout() -> void:

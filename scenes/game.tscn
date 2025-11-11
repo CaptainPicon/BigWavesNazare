@@ -163,10 +163,10 @@ script = ExtResource("1_lbhrr")
 enemy_scenes = Array[PackedScene]([ExtResource("2_lbhrr")])
 
 [node name="PowerMeter" type="TextureProgressBar" parent="."]
-offset_left = -240.0
-offset_top = -128.0
-offset_right = -4.0
-offset_bottom = 45.0
+offset_left = -224.0
+offset_top = -120.0
+offset_right = 12.0
+offset_bottom = 53.0
 texture_under = ExtResource("5_p57ef")
 texture_progress = ExtResource("6_u5sy4")
 
