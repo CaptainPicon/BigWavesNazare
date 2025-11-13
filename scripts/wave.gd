@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+
 # --- CONFIGURATION ---
 const RISE_FORCE_INCREMENT_STEP: float = 3000.0
 const RISE_FORCE_MAX: float = 4000.0
@@ -16,16 +17,24 @@ var rise_activated: bool = false
 var base_x_position: float
 var surge_progress: float = 0.0  # Keeps track of current forward offset
 
-# --- SIGNALS
-signal hit 
-
+@onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var shapes := {
+	"low": $CollisionShape2D_low,
+	"medium": $CollisionShape2D_medium,
+	"big": $CollisionShape2D_big,
+	#"tsunami": $CollisionShape2D_Tsunami
+}
 
 func _ready() -> void:
 	base_x_position = global_position.x
+	_update_collision_shape(anim_sprite.animation)
+	anim_sprite.connect("animation_changed", Callable(self, "_on_animation_changed"))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action("move"):
 		rise_activated = Input.is_action_pressed("move")
+		
+
 
 func _process(delta: float) -> void:
 	# --- Rise force build-up ---
@@ -53,3 +62,17 @@ func _physics_process(delta: float) -> void:
 
 	velocity.y = clamp(velocity.y, -RISE_FORCE_MAX, MAX_FALL_SPEED)
 	move_and_slide()
+
+
+func _on_animation_changed():
+	_update_collision_shape(anim_sprite.animation)
+
+func _update_collision_shape(anim_name: String):
+	# Disable all first
+	for shape in shapes.values():
+		shape.call_deferred("set_disabled", true)
+
+	# Enable the one matching the current animation
+	if anim_name in shapes:
+		shapes[anim_name].call_deferred("set_disabled", false)
+	

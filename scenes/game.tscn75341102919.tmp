@@ -178,7 +178,7 @@ normal = Vector2(0, 1)
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lbhrr")
 enemy_scenes = Array[PackedScene]([ExtResource("2_lbhrr")])
-destruction_power_gain = 3.0
+destruction_power_gain = 20.0
 
 [node name="UI" type="Node" parent="."]
 

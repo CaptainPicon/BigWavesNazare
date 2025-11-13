@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://guxtf1at7al7"
-path="res://.godot/imported/Pixel2_Healthbar_0004_Background.png-141c8cd1a0bf7a8ca40d29000fad93ca.ctex"
+uid="uid://c6kl0pcuongen"
+path="res://.godot/imported/Powerbar_progress1.png-addc60f35411beff1dacbf9832809dc2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Pixel2_Healthbar_0004_Background.png"
-dest_files=["res://.godot/imported/Pixel2_Healthbar_0004_Background.png-141c8cd1a0bf7a8ca40d29000fad93ca.ctex"]
+source_file="res://assets/sprites/Powerbar_progress1.png"
+dest_files=["res://.godot/imported/Powerbar_progress1.png-addc60f35411beff1dacbf9832809dc2.ctex"]
 
 [params]
 

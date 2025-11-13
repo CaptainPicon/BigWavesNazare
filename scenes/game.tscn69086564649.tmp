@@ -178,7 +178,13 @@ normal = Vector2(0, 1)
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lbhrr")
 enemy_scenes = Array[PackedScene]([ExtResource("2_lbhrr")])
-destruction_power_gain = 3.0
+base_spawn_time = null
+spawn_variation = null
+power_max = null
+passive_power_rate = null
+destruction_power_gain = null
+wave_small_threshold = null
+wave_medium_threshold = null
 
 [node name="UI" type="Node" parent="."]
 
