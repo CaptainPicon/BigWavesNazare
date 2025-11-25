@@ -1,28 +1,28 @@
 extends CharacterBody2D
 
-
 # --- CONFIGURATION ---
-const RISE_FORCE_INCREMENT_STEP: float = 3000.0
-const RISE_FORCE_MAX: float = 4000.0
+const RISE_FORCE_INCREMENT_STEP: float = 1000.0
+const RISE_FORCE_MAX: float = 2000.0
 const MAX_FALL_SPEED: float = 500.0
-const GRAVITY: float = 3000.0
+const GRAVITY: float = 2000.0
 
 # --- WAVE MOTION CONFIG ---
-@export var forward_offset_max: float = 50.0  # How far forward the wave surges
-@export var forward_return_speed: float = 2.0  # How fast it returns when falling
+@export var forward_offset_max: float = 50.0      # How far forward the wave surges
+@export var forward_return_speed: float = 2.0     # How fast it returns when falling
+@export var drag_recovery_speed: float = 2.0      # How fast the wave recovers from rock drag
 
 # --- STATE VARIABLES ---
 var rise_force: float = 0.0
 var rise_activated: bool = false
 var base_x_position: float
-var surge_progress: float = 0.0  # Keeps track of current forward offset
+var surge_progress: float = 0.0   # Current forward offset (0-1)
+var drag_offset: float = 0.0      # Tracks backward drag caused by rocks
 
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var shapes := {
 	"low": $CollisionShape2D_low,
 	"medium": $CollisionShape2D_medium,
-	"big": $CollisionShape2D_big,
-	#"tsunami": $CollisionShape2D_Tsunami
+	"big": $CollisionShape2D_big
 }
 
 func _ready() -> void:
@@ -33,8 +33,6 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action("move"):
 		rise_activated = Input.is_action_pressed("move")
-		
-
 
 func _process(delta: float) -> void:
 	# --- Rise force build-up ---
@@ -48,11 +46,14 @@ func _process(delta: float) -> void:
 		# Ease forward while rising
 		surge_progress = lerp(surge_progress, 1.0, 3.0 * delta)
 	elif velocity.y > 0 or is_on_ceiling():
-		# Only return once the wave is falling
+		# Return surge when falling
 		surge_progress = lerp(surge_progress, 0.0, forward_return_speed * delta)
 
-	# Apply horizontal offset based on surge progress
-	global_position.x = base_x_position + (forward_offset_max * surge_progress)
+	# --- Drag recovery ---
+	drag_offset = lerp(drag_offset, 0.0, drag_recovery_speed * delta)
+
+	# Apply combined offset (surge - drag)
+	global_position.x = base_x_position + (forward_offset_max * surge_progress) - drag_offset
 
 func _physics_process(delta: float) -> void:
 	if rise_activated and not is_on_ceiling():
@@ -63,16 +64,19 @@ func _physics_process(delta: float) -> void:
 	velocity.y = clamp(velocity.y, -RISE_FORCE_MAX, MAX_FALL_SPEED)
 	move_and_slide()
 
-
 func _on_animation_changed():
 	_update_collision_shape(anim_sprite.animation)
 
 func _update_collision_shape(anim_name: String):
-	# Disable all first
+	# Disable all shapes first
 	for shape in shapes.values():
 		shape.call_deferred("set_disabled", true)
 
-	# Enable the one matching the current animation
+	# Enable shape matching current animation
 	if anim_name in shapes:
 		shapes[anim_name].call_deferred("set_disabled", false)
-	
+
+# --- NEW: Called when a rock hits the wave ---
+func apply_rock_drag(rock_speed: float) -> void:
+	# rock_speed should be positive; scale how much the wave is dragged back
+	drag_offset += rock_speed * 0.2  # tweak factor as needed
