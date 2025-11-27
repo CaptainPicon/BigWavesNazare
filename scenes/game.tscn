@@ -151,7 +151,7 @@ z_index = 2
 position = Vector2(210, -69)
 sprite_frames = SubResource("SpriteFrames_ssvqc")
 autoplay = "default"
-frame_progress = 0.33411914
+frame_progress = 0.60761625
 
 [node name="Water" type="Sprite2D" parent="World"]
 z_index = 1

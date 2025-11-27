@@ -1,7 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bajjlplok6hah"]
+[gd_scene load_steps=14 format=3 uid="uid://bajjlplok6hah"]
 
 [ext_resource type="Script" uid="uid://kijfve3ehscq" path="res://scripts/mobs.gd" id="1_5tbdg"]
+[ext_resource type="AudioStream" uid="uid://dak2t6hekmwj8" path="res://assets/sound/zapsplat_water_splash_001.mp3" id="2_5l71q"]
 [ext_resource type="Texture2D" uid="uid://ckgq235eun7uv" path="res://assets/sprites/surfer.png" id="2_5tbdg"]
+[ext_resource type="AudioStream" uid="uid://dx4n18hibptmm" path="res://assets/sound/zapsplat_water_splash_002.mp3" id="3_cb6ib"]
+[ext_resource type="AudioStream" uid="uid://dqp8d8inbwljn" path="res://assets/sound/zapsplat_water_splash_003.mp3" id="4_mo1jw"]
+[ext_resource type="AudioStream" uid="uid://ctu1tgxqy6f47" path="res://assets/sound/zapsplat_water_splash_004.mp3" id="5_634vd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5l71q"]
 atlas = ExtResource("2_5tbdg")
@@ -63,6 +67,7 @@ collision_layer = 2
 collision_mask = 5
 priority = 1
 script = ExtResource("1_5tbdg")
+splash_sounds = Array[AudioStream]([ExtResource("2_5l71q"), ExtResource("3_cb6ib"), ExtResource("4_mo1jw"), ExtResource("5_634vd")])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -70,7 +75,7 @@ texture_repeat = 3
 sprite_frames = SubResource("SpriteFrames_vijw3")
 animation = &"BigSurfer"
 autoplay = "BigSurfer"
-frame_progress = 0.10997318
+frame_progress = 0.38154992
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
@@ -79,6 +84,8 @@ shape = SubResource("CapsuleShape2D_lwidw")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(-1, 2)
+
+[node name="Splash" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

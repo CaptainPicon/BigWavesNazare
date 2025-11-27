@@ -1,6 +1,8 @@
 extends Area2D
 
 @export var mob_speed:float = 140
+@export var splash_sounds: Array[AudioStream] = []
+@onready var splash_surfer: AudioStreamPlayer2D = $Splash
 
 
 
@@ -37,20 +39,7 @@ func _on_body_entered(_body):
 			var decay = 5 + (power_ratio * 2.0)    # longer shake for big waves
 			camera.start_shake(intensity, decay)
 
-		# Kill enemy after short delay
+		SoundManager.play_sfx(splash_sounds.pick_random(), -6)
 		call_deferred("queue_free")
 		
-		# 3️ Destroy the enemy
-		# Start a 1-second timer before removing the enemy
-		var death_timer = Timer.new()
-		death_timer.wait_time = 0.1
-		death_timer.one_shot = true
-		add_child(death_timer)
-		death_timer.start()
-		
-		death_timer.timeout.connect(func():
-			queue_free())
-
-
-func _on_visible_on_screen_notifier_2d_screen_exited():
-	queue_free()
+	

@@ -11,6 +11,12 @@ const GRAVITY: float = 2000.0
 @export var forward_return_speed: float = 2.0     # How fast it returns when falling
 @export var drag_recovery_speed: float = 2.0      # How fast the wave recovers from rock drag
 
+# --- Sound ---
+@export var rise_sound: AudioStream
+@onready var wave_audio: AudioStreamPlayer2D = $AudioStreamPlayer2D
+var was_rising := false
+
+
 # --- STATE VARIABLES ---
 var rise_force: float = 0.0
 var rise_activated: bool = false
@@ -40,6 +46,15 @@ func _process(delta: float) -> void:
 		rise_force = min(rise_force + RISE_FORCE_INCREMENT_STEP * delta, RISE_FORCE_MAX)
 	else:
 		rise_force = 0.0
+	
+		# --- SOUND LOGIC ---
+	if rise_activated and not was_rising:
+		_start_rise_sound()
+	elif not rise_activated and was_rising:
+		_stop_rise_sound()
+
+	was_rising = rise_activated
+
 
 	# --- Horizontal surge control ---
 	if rise_activated and not is_on_ceiling():
@@ -54,6 +69,12 @@ func _process(delta: float) -> void:
 
 	# Apply combined offset (surge - drag)
 	global_position.x = base_x_position + (forward_offset_max * surge_progress) - drag_offset
+	
+	# Pitch reacts to force
+	if wave_audio.playing:
+		var force_ratio := rise_force / RISE_FORCE_MAX
+		wave_audio.pitch_scale = lerp(0.9, 1.2, force_ratio)
+
 
 func _physics_process(delta: float) -> void:
 	if rise_activated and not is_on_ceiling():
@@ -80,3 +101,17 @@ func _update_collision_shape(anim_name: String):
 func apply_rock_drag(rock_speed: float) -> void:
 	# rock_speed should be positive; scale how much the wave is dragged back
 	drag_offset += rock_speed * 0.2  # tweak factor as needed
+
+func _start_rise_sound():
+	if not rise_sound:
+		return
+
+	if not wave_audio.playing:
+		wave_audio.stream = rise_sound
+		wave_audio.pitch_scale = randf_range(0.95, 1.05)
+		wave_audio.volume_db = -10
+		wave_audio.play()
+
+func _stop_rise_sound():
+	if wave_audio.playing:
+		wave_audio.stop()
