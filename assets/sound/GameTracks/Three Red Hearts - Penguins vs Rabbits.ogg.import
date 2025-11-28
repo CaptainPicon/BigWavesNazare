@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cotah6a8i086r"
+path="res://.godot/imported/Three Red Hearts - Penguins vs Rabbits.ogg-bee0ff1cb25b342546499decab8c103a.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sound/GameTracks/Three Red Hearts - Penguins vs Rabbits.ogg"
+dest_files=["res://.godot/imported/Three Red Hearts - Penguins vs Rabbits.ogg-bee0ff1cb25b342546499decab8c103a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

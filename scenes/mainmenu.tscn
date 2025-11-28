@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://botb3jgq8v3sv"]
+
+[ext_resource type="Script" uid="uid://dl501qrj6yfp1" path="res://scripts/MainMenu.gd" id="1_r3g3c"]
+[ext_resource type="PackedScene" uid="uid://6ec3a7mx85f" path="res://scenes/game.tscn" id="2_3vvtq"]
+[ext_resource type="FontFile" uid="uid://q2g1yxkuuc6m" path="res://assets/sprites/PixelOperator8-Bold.ttf" id="3_s5g8n"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r3g3c")
+game_scene = ExtResource("2_3vvtq")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.47058824, 0.7176471, 0.9019608, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_s5g8n")
+text = "Start Game"
+flat = true
+
+[node name="Exit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_s5g8n")
+text = "Exit "
+flat = true

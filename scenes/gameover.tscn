@@ -1,0 +1,86 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwxdabvbh6sof"]
+
+[ext_resource type="FontFile" uid="uid://q2g1yxkuuc6m" path="res://assets/sprites/PixelOperator8-Bold.ttf" id="1_dy3ie"]
+[ext_resource type="Script" uid="uid://ctnuwowmkjn4b" path="res://scripts/gameover.gd" id="1_h8i2o"]
+[ext_resource type="FontFile" uid="uid://csbfhee1wv1jk" path="res://assets/sprites/PixelOperator8.ttf" id="2_2mkfd"]
+[ext_resource type="PackedScene" uid="uid://6ec3a7mx85f" path="res://scenes/game.tscn" id="2_mt7yr"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h8i2o")
+game_scene = ExtResource("2_mt7yr")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.47058824, 0.7176471, 0.9019608, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -98.5
+offset_right = 69.0
+offset_bottom = -75.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_dy3ie")
+theme_override_font_sizes/font_size = 24
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = 32.0
+offset_right = 37.0
+offset_bottom = 84.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_2mkfd")
+text = "Try again"
+flat = true
+
+[node name="Exit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_2mkfd")
+text = "Quit"
+flat = true
+
+[node name="Distance" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_dy3ie")

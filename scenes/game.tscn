@@ -1,0 +1,272 @@
+[gd_scene load_steps=36 format=3 uid="uid://6ec3a7mx85f"]
+
+[ext_resource type="Script" uid="uid://bb4edfqhveu5l" path="res://scripts/game_manager.gd" id="1_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://bajjlplok6hah" path="res://scenes/mobs.tscn" id="2_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://ckhh5luc6h5re" path="res://scenes/wave.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://cxw33yiuru6pt" path="res://scenes/rocks.tscn" id="3_dinhu"]
+[ext_resource type="Texture2D" uid="uid://dq4d8316xomul" path="res://assets/sprites/Powerbar_outline.png" id="3_iywne"]
+[ext_resource type="AudioStream" uid="uid://csyu2wxq8t6ic" path="res://assets/sound/SFX/HAP_8BIT_SFX_MUSIC_PACK_V2/SFX/Actions/Grow01.wav" id="4_ca42v"]
+[ext_resource type="Texture2D" uid="uid://c6kl0pcuongen" path="res://assets/sprites/Powerbar_progress1.png" id="5_gee14"]
+[ext_resource type="AudioStream" uid="uid://bxbbdmucgarcj" path="res://assets/sound/SFX/HAP_8BIT_SFX_MUSIC_PACK_V2/SFX/Actions/Activate_Power.wav" id="5_rysoc"]
+[ext_resource type="Texture2D" uid="uid://ew3ysxbau17q" path="res://assets/sprites/Powerbar_progress2.png" id="6_0tnpc"]
+[ext_resource type="Script" uid="uid://ckr0xe5toiurf" path="res://scripts/camera.gd" id="6_gee14"]
+[ext_resource type="FontFile" uid="uid://q2g1yxkuuc6m" path="res://assets/sprites/PixelOperator8-Bold.ttf" id="6_vtaks"]
+[ext_resource type="Texture2D" uid="uid://dgtxc7607gpar" path="res://assets/sprites/beach_animation.png" id="10_ir15t"]
+[ext_resource type="Shader" uid="uid://be6sw0otnhnph" path="res://scripts/waves.gdshader" id="10_kvpfn"]
+[ext_resource type="Texture2D" uid="uid://blp75ukeofope" path="res://assets/sprites/sky_close.png" id="10_trtic"]
+[ext_resource type="Texture2D" uid="uid://ctgglu2x68ngq" path="res://assets/sprites/water_shader.png" id="11_dinhu"]
+[ext_resource type="Texture2D" uid="uid://d246qieaag3mk" path="res://assets/sprites/sky_far.png" id="11_trtic"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_vtaks"]
+frames = 2
+frame_0/texture = ExtResource("5_gee14")
+frame_1/texture = ExtResource("6_0tnpc")
+frame_1/duration = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_kvpfn"]
+font = ExtResource("6_vtaks")
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_0tnpc"]
+font = ExtResource("6_vtaks")
+font_size = 8
+
+[sub_resource type="Curve2D" id="Curve2D_iywne"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 160, -72, 0, 0, 0, 0, 187.42857, -72, 0, 0, 0, 0, 208, -72, 0, 0, 0, 0, 207.99994, 103.99999, 0, 0, 0, 0, 187.42857, 103.99996, 0, 0, 0, 0, 187.42856, 104, 0, 0, 0, 0, 180.57141, 104, 0, 0, 0, 0, 180.57143, 103.99996, 0, 0, 0, 0, 160, 103.99999, 0, 0, 0, 0, 160.25577, 43.737427, 0, 0, 0, 0, 160, -72)
+}
+point_count = 11
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trtic"]
+atlas = ExtResource("10_ir15t")
+region = Rect2(0, 0, 60, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ir15t"]
+atlas = ExtResource("10_ir15t")
+region = Rect2(60, 0, 60, 67)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ssvqc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trtic")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ir15t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dinhu"]
+shader = ExtResource("10_kvpfn")
+shader_parameter/base_y = 0.3
+shader_parameter/waterColor = Vector4(0.368, 0.604, 0.553, 1)
+shader_parameter/colorCorection = 0.0
+shader_parameter/distortionForce = 1.0
+shader_parameter/WDBrightness = 0.0
+shader_parameter/WDFreq = 1.0
+shader_parameter/WDSize = 4.0
+shader_parameter/WDSpeed = 10.0
+shader_parameter/tiling = Vector2(1.164, 1)
+shader_parameter/offSetSpeed = Vector2(0.035, 0.01)
+shader_parameter/wave_frequency = 15.0
+shader_parameter/wave_amplitude = 0.035
+shader_parameter/wave_speed = 3.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_yqjtg"]
+distance = 8.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lnu2h"]
+normal = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_trtic"]
+offsets = PackedFloat32Array(0, 0.4820144, 0.99640286)
+colors = PackedColorArray(1, 1, 1, 0, 1, 0.92941177, 0.84313726, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ir15t"]
+gradient = SubResource("Gradient_trtic")
+width = 1
+height = 32
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_ca42v"]
+colors = PackedColorArray(1, 1, 1, 0.09411765, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rysoc"]
+gradient = SubResource("Gradient_ca42v")
+
+[sub_resource type="Gradient" id="Gradient_ssvqc"]
+offsets = PackedFloat32Array(0, 0.35897437, 0.99572647)
+colors = PackedColorArray(1, 1, 1, 0, 1, 0.92941177, 0.84313726, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_264po"]
+gradient = SubResource("Gradient_ssvqc")
+
+[sub_resource type="Curve" id="Curve_trtic"]
+_limits = [-200.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0.103846155, 0.41195482), 0.0, 0.0, 0, 0, Vector2(0.20769233, -5.8158264), 0.0, 0.0, 0, 0, Vector2(0.37307692, 0.18093705), 0.0, 0.0, 0, 0, Vector2(0.48076925, 27.786774), 0.0, 0.0, 0, 0, Vector2(0.6923077, 0.19143784), -1.7709471, -1.7709471, 0, 0, Vector2(0.8846155, 19.386139), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="CurveTexture" id="CurveTexture_5newe"]
+curve = SubResource("Curve_trtic")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_trtic"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(150, 150, 1)
+gravity = Vector3(100, 10, 0)
+tangential_accel_min = -2.2351742e-06
+tangential_accel_max = 5.9999976
+tangential_accel_curve = SubResource("CurveTexture_5newe")
+damping_max = 100.00001
+scale_min = 1.5
+scale_max = 1.8
+color_ramp = SubResource("GradientTexture1D_264po")
+color_initial_ramp = SubResource("GradientTexture1D_rysoc")
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_lbhrr")
+enemy_scenes = Array[PackedScene]([ExtResource("2_lbhrr"), ExtResource("3_dinhu")])
+base_spawn_time = 1.0
+max_spawn_time = 2.0
+destruction_power_gain = 5.0
+level_up_wave_one = ExtResource("4_ca42v")
+level_up_wave_two = ExtResource("5_rysoc")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_smoothed = true
+position_smoothing_enabled = true
+script = ExtResource("6_gee14")
+
+[node name="UI" type="Node" parent="."]
+
+[node name="PowerMeter" type="TextureProgressBar" parent="UI"]
+z_index = 2
+offset_left = -232.0
+offset_top = -112.0
+offset_right = -112.0
+offset_bottom = -94.0
+texture_over = ExtResource("3_iywne")
+texture_progress = SubResource("AnimatedTexture_vtaks")
+
+[node name="Label" type="Label" parent="UI/PowerMeter"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = -13.0
+offset_right = 206.0
+offset_bottom = 3.0
+text = "Tsunami Meter"
+label_settings = SubResource("LabelSettings_kvpfn")
+metadata/_edit_group_ = true
+
+[node name="Score" type="Label" parent="UI"]
+z_index = 2
+offset_left = -232.0
+offset_top = 112.0
+offset_right = -112.0
+offset_bottom = 135.0
+label_settings = SubResource("LabelSettings_0tnpc")
+vertical_alignment = 1
+
+[node name="Spawn" type="Node" parent="."]
+
+[node name="EnemyTimer" type="Timer" parent="Spawn"]
+wait_time = 0.5
+
+[node name="StartTimer" type="Timer" parent="Spawn"]
+wait_time = 2.0
+one_shot = true
+
+[node name="EnemyPath" type="Path2D" parent="Spawn"]
+position = Vector2(78, 28.000006)
+scale = Vector2(0.6597436, 0.639322)
+curve = SubResource("Curve2D_iywne")
+
+[node name="SpawnLocation" type="PathFollow2D" parent="Spawn/EnemyPath"]
+visible = false
+position = Vector2(160, -72)
+rotates = false
+
+[node name="wave" parent="." instance=ExtResource("2_yqjtg")]
+z_index = 2
+position = Vector2(-144, 56)
+
+[node name="World" type="Node" parent="."]
+
+[node name="Beach" type="AnimatedSprite2D" parent="World"]
+z_index = 2
+position = Vector2(210, -69)
+sprite_frames = SubResource("SpriteFrames_ssvqc")
+autoplay = "default"
+frame_progress = 0.60761625
+
+[node name="Water" type="Sprite2D" parent="World"]
+z_index = 1
+texture_filter = 2
+material = SubResource("ShaderMaterial_dinhu")
+position = Vector2(0, -0.5)
+scale = Vector2(1, 1.2904762)
+texture = ExtResource("11_dinhu")
+
+[node name="Sky" type="Node2D" parent="World"]
+position = Vector2(-240, -136)
+
+[node name="Background" type="Parallax2D" parent="World/Sky"]
+
+[node name="ColorRect" type="ColorRect" parent="World/Sky/Background"]
+offset_right = 480.0
+offset_bottom = 120.0
+color = Color(0.33333334, 0.6392157, 0.85490197, 1)
+
+[node name="High Clouds" type="Parallax2D" parent="World/Sky"]
+visible = false
+repeat_size = Vector2(200, 0)
+autoscroll = Vector2(10, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Sky/High Clouds"]
+z_index = 1
+texture_filter = 1
+position = Vector2(304, 32)
+texture = ExtResource("10_trtic")
+
+[node name="Low Clouds" type="Parallax2D" parent="World/Sky"]
+texture_filter = 1
+repeat_size = Vector2(580, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Sky/Low Clouds"]
+z_index = 1
+texture_filter = 1
+position = Vector2(328, 42)
+texture = ExtResource("11_trtic")
+
+[node name="ButtomLimit" type="StaticBody2D" parent="World"]
+collision_layer = 4
+
+[node name="Buttomlimit" type="CollisionShape2D" parent="World/ButtomLimit"]
+position = Vector2(0, 112)
+shape = SubResource("WorldBoundaryShape2D_yqjtg")
+
+[node name="UpperLimit" type="StaticBody2D" parent="World"]
+collision_layer = 4
+
+[node name="Upperlimit" type="CollisionShape2D" parent="World/UpperLimit"]
+position = Vector2(0, -29)
+shape = SubResource("WorldBoundaryShape2D_lnu2h")
+
+[node name="WindParticles" type="GPUParticles2D" parent="World"]
+z_index = 3
+position = Vector2(-127, -3)
+amount = 15
+texture = SubResource("GradientTexture2D_ir15t")
+lifetime = 3.0
+preprocess = 2.0
+randomness = 1.0
+fixed_fps = 60
+trail_enabled = true
+trail_lifetime = 0.61
+process_material = SubResource("ParticleProcessMaterial_trtic")
+
+[connection signal="timeout" from="Spawn/EnemyTimer" to="." method="_on_enemy_timer_timeout"]
+[connection signal="timeout" from="Spawn/StartTimer" to="." method="_on_start_timer_timeout"]
