@@ -28,6 +28,8 @@ var gameover_path = "res://scenes/gameover.tscn"
 @export var wave_medium_threshold:float = 0.66  # 34% - 66%
 @export var level_up_wave_one: AudioStream
 @export var level_up_wave_two: AudioStream
+@export var tsunami_sound: AudioStream
+
 var power: float = 15.0
 enum WaveLevel {
 	LOW,
@@ -40,6 +42,10 @@ var current_wave_level: int = WaveLevel.LOW
 var slowdown_timer:= 0.0
 var slowdown_strength:= 0.5
 
+# Tsunami Mode
+@export var tsunami_duration: float = 5.0  
+var tsunami_active := false
+var tsunami_timer := 0.0
 #  Distance
 var distance_travelled: float = 0.0
 
@@ -50,7 +56,6 @@ var distance_travelled: float = 0.0
 
 # Parallax
 @onready var clouds: Parallax2D = $"World/Sky/Low Clouds"
-
 
 
 ## --- READY ---
@@ -83,9 +88,16 @@ func change_to_menu():
 ## --- POWER BAR ---
 func _process(delta: float) -> void:
 	# Passive increase
-	power += passive_power_rate * delta
-	power = clamp(power, 0.0, power_max)
-	_update_power_meter()
+	if not tsunami_active:
+		power += passive_power_rate * delta
+		power = clamp(power, 0.0, power_max)
+		_update_power_meter()
+	
+	# --- TSUNAMI MODE TIMER ---
+	if tsunami_active:
+		tsunami_timer -= delta
+		if tsunami_timer <= 0:
+			_end_tsunami_mode()
 
 	# --- Distance / Score ---
 	var max_wave_speed: float = 200
@@ -108,6 +120,7 @@ func _process(delta: float) -> void:
 		slowdown_timer -= delta
 		var slow_multiplier = 1.0 - slowdown_strength
 		current_speed *= slow_multiplier
+		
 
 func add_power_from_enemy():
 	power += destruction_power_gain
@@ -115,12 +128,19 @@ func add_power_from_enemy():
 	_update_power_meter()
 
 func remove_power_from_rocks():
+	if tsunami_active:
+		return
 	power -= rocks_power_loss
 	power = clamp(power, 0.0, power_max)
 	_update_power_meter()
 	
 func _update_power_meter():
 	if not bar:
+		return
+		
+	# Tsunami lock: while tsunami is active we simply show tsunami and skip state changes
+	if tsunami_active:
+		bar.value = power_max
 		return
 
 	# Set value directly (max_value = power_max)
@@ -129,9 +149,16 @@ func _update_power_meter():
 	var animated_texture := bar.texture_progress
 	# Play wave animation based on power level
 	var normalized_power = power / power_max
-	if normalized_power <= 0:
+	if normalized_power <= 0 and not tsunami_active  :
 		game_over()
-		
+	
+	# Tsunami overrides all other wave states
+	# Trigger tsunami when power hits max
+	if power >= power_max and not tsunami_active:
+		_start_tsunami_mode()
+		return   # <--- IMPORTANT: prevent the rest of the function from running this frame
+
+
 	# LOW	
 	if normalized_power <= wave_small_threshold:
 		if current_wave_level != WaveLevel.LOW:
@@ -213,3 +240,26 @@ func _on_enemy_timer_timeout() -> void:
 		enemy.global_position = spawn_path.global_position
 
 		add_child(enemy)
+
+# Tsunami Mode
+func _start_tsunami_mode() -> void:
+	tsunami_active = true
+
+	tsunami_timer = tsunami_duration
+	power = power_max   # lock power
+	print("Current Wave Animation: ", wave_animation.animation)
+	print("available animations:", wave_animation.sprite_frames.get_animation_names())
+	wave_animation.stop()
+	SoundManager.play_sfx(tsunami_sound)
+	_play_wave_animation("tsunami")
+
+	# Optional effects
+	water_shader.material.set_shader_parameter("wave_amplitude", 0.07)
+	water_shader.material.set_shader_parameter("wave_speed", 25)
+	clouds.autoscroll.x = -50
+
+
+func _end_tsunami_mode() -> void:
+	tsunami_active = false
+	power = power_max * 0.4   # exit with partial power
+	_update_power_meter()

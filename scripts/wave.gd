@@ -29,7 +29,8 @@ var drag_offset: float = 0.0      # Tracks backward drag caused by rocks
 @onready var shapes := {
 	"low": $CollisionShape2D_low,
 	"medium": $CollisionShape2D_medium,
-	"big": $CollisionShape2D_big
+	"big": $CollisionShape2D_big,
+	"tsunami": $CollisionShape2D_tsunami
 }
 
 func _ready() -> void:
@@ -42,7 +43,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		rise_activated = Input.is_action_pressed("move")
 
 func _process(delta: float) -> void:
-	# --- Rise force build-up ---
+	# --- Rise force build-up ---              
 	if rise_activated:
 		rise_force = min(rise_force + RISE_FORCE_INCREMENT_STEP * delta, RISE_FORCE_MAX)
 	else:
@@ -115,7 +116,7 @@ func play_wave_sound(stream: AudioStream) -> void:
 	if not stream:
 		return
 
-	wave_audio.stop()
+	wave_audio.stop() 
 	wave_audio.stream = stream
 	wave_audio.bus = "SFX"
 	wave_audio.pitch_scale = randf_range(0.95, 1.05)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://6ec3a7mx85f"]
+[gd_scene load_steps=37 format=3 uid="uid://6ec3a7mx85f"]
 
 [ext_resource type="Script" uid="uid://bb4edfqhveu5l" path="res://scripts/game_manager.gd" id="1_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://bajjlplok6hah" path="res://scenes/mobs.tscn" id="2_lbhrr"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://bxbbdmucgarcj" path="res://assets/sound/SFX/HAP_8BIT_SFX_MUSIC_PACK_V2/SFX/Actions/Activate_Power.wav" id="5_rysoc"]
 [ext_resource type="Texture2D" uid="uid://ew3ysxbau17q" path="res://assets/sprites/Powerbar_progress2.png" id="6_0tnpc"]
 [ext_resource type="Script" uid="uid://ckr0xe5toiurf" path="res://scripts/camera.gd" id="6_gee14"]
+[ext_resource type="AudioStream" uid="uid://dphlo2k2hk5we" path="res://assets/sound/SFX/HAP_8BIT_SFX_MUSIC_PACK_V2/SFX/Win_Lose/All_Enemies_Killed.wav" id="6_rysoc"]
 [ext_resource type="FontFile" uid="uid://q2g1yxkuuc6m" path="res://assets/sprites/PixelOperator8-Bold.ttf" id="6_vtaks"]
 [ext_resource type="Texture2D" uid="uid://dgtxc7607gpar" path="res://assets/sprites/beach_animation.png" id="10_ir15t"]
 [ext_resource type="Shader" uid="uid://be6sw0otnhnph" path="res://scripts/waves.gdshader" id="10_kvpfn"]
@@ -131,9 +132,9 @@ script = ExtResource("1_lbhrr")
 enemy_scenes = Array[PackedScene]([ExtResource("2_lbhrr"), ExtResource("3_dinhu")])
 base_spawn_time = 1.0
 max_spawn_time = 2.0
-destruction_power_gain = 5.0
 level_up_wave_one = ExtResource("4_ca42v")
 level_up_wave_two = ExtResource("5_rysoc")
+tsunami_sound = ExtResource("6_rysoc")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_smoothed = true

@@ -55,7 +55,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"SmallSurfer",
-"speed": 10.0
+"speed": 6.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lwidw"]
@@ -71,8 +71,6 @@ script = ExtResource("1_5tbdg")
 splash_sounds = Array[AudioStream]([ExtResource("2_5l71q"), ExtResource("3_cb6ib"), ExtResource("4_mo1jw"), ExtResource("5_634vd")])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-texture_repeat = 3
 sprite_frames = SubResource("SpriteFrames_vijw3")
 animation = &"SmallSurfer"
 autoplay = "BigSurfer"

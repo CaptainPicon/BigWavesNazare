@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://ckhh5luc6h5re"]
+[gd_scene load_steps=28 format=3 uid="uid://ckhh5luc6h5re"]
 
 [ext_resource type="Script" uid="uid://bf52kyrd8yk6p" path="res://scripts/wave.gd" id="1_h2l3e"]
 [ext_resource type="Texture2D" uid="uid://sc5rijgyoiey" path="res://assets/sprites/Wave-sheet.png" id="2_h2l3e"]
 [ext_resource type="AudioStream" uid="uid://dqofiipdbuaxv" path="res://assets/sound/WInd/zapsplat_pack_windy_mp3/zapsplat_nature_wind_very_strong_coastal_storm_designed_85309.mp3" id="2_sl0wx"]
 [ext_resource type="AudioStream" uid="uid://bmvp8cc2urhvh" path="res://assets/sound/WInd/zapsplat_pack_windy_mp3/zapsplat_nature_wind_strong_blizzard_cold_howling_designed_85312.mp3" id="3_bj1h1"]
 [ext_resource type="Shader" uid="uid://dgueepa2w0ukf" path="res://scripts/wave_blink_shader.gdshader" id="4_g2oey"]
+[ext_resource type="Texture2D" uid="uid://d0ghy860kexen" path="res://assets/sprites/tsunami.png" id="6_247ye"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_247ye"]
 shader = ExtResource("4_g2oey")
@@ -54,6 +55,22 @@ region = Rect2(448, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_j6mo3"]
 atlas = ExtResource("2_h2l3e")
 region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7pyk8"]
+atlas = ExtResource("6_247ye")
+region = Rect2(0, 0, 200, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qyfcs"]
+atlas = ExtResource("6_247ye")
+region = Rect2(200, 0, 200, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0ldx"]
+atlas = ExtResource("6_247ye")
+region = Rect2(400, 0, 200, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10w1y"]
+atlas = ExtResource("6_247ye")
+region = Rect2(600, 0, 200, 150)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_247ye"]
 animations = [{
@@ -109,6 +126,23 @@ animations = [{
 "loop": true,
 "name": &"medium",
 "speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7pyk8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qyfcs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0ldx")
+}, {
+"duration": 2.01,
+"texture": SubResource("AtlasTexture_10w1y")
+}],
+"loop": true,
+"name": &"tsunami",
+"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2l3e"]
@@ -120,6 +154,9 @@ radius = 17.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_bj1h1"]
 radius = 19.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_247ye"]
+size = Vector2(168, 111)
+
 [node name="wave" type="CharacterBody2D"]
 collision_mask = 6
 script = ExtResource("1_h2l3e")
@@ -129,7 +166,7 @@ fall_sound = ExtResource("3_bj1h1")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_247ye")
 sprite_frames = SubResource("SpriteFrames_247ye")
-animation = &"dead"
+animation = &"tsunami"
 autoplay = "low"
 
 [node name="CollisionShape2D_low" type="CollisionShape2D" parent="."]
@@ -146,5 +183,9 @@ shape = SubResource("CircleShape2D_sl0wx")
 visibility_layer = 7
 position = Vector2(-1, 9)
 shape = SubResource("CircleShape2D_bj1h1")
+
+[node name="CollisionShape2D_tsunami" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 11.5)
+shape = SubResource("RectangleShape2D_247ye")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
