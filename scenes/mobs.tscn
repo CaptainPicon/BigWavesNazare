@@ -72,7 +72,7 @@ splash_sounds = Array[AudioStream]([ExtResource("2_5l71q"), ExtResource("3_cb6ib
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vijw3")
-animation = &"SmallSurfer"
+animation = &"BigSurfer"
 autoplay = "BigSurfer"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
